@@ -1,4 +1,3 @@
-//testq
 {
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
@@ -121,11 +120,14 @@
     },
     "custom/desligar": {
     "format": "    ",
-    "on-click": "wlogout"
+    "on-click": "exec swaynag -t warning -m 'You pressed exit. Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'",
+    "icon-size": 16
     },
-    "tray": {
-	"icon-size": 12
-    }
-}
 
+    //
+    // exit mode
+    //
+
+
+}
 //need to install wlogout,kitty @ pavucontrol
