@@ -1,111 +1,90 @@
 {
-    // "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height":38, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 6, // Gaps between modules (4px)
+    "layer": "top",
+    "position": "top",
+    "height": 35,
+    "spacing": 4,
+    "margin-top": 10,
+    "margin-bottom":2,
+
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "keyboard-state", "Vclock", "custom/desligar"],
+
+    "modules-left":[  "idle_inhibitor", "pulseaudio", "cpu", "memory", "temperature"],
+    "modules-center": [ "custom/launcher", "custom/media","wlr/taskbar", "custom/power"],
+    "modules-right":["custom/htop",  "custom/snip",  "keyboard-state",  "battery", "battery#bat2", "network", "tray",  "clock"],
     // Modules configuration
-    // "sway/workspaces": {
-    //     "disable-scroll": true,
-    //     "all-outputs": true,
-    //     "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
+
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
-        "format": "{name} {icon}",
+        "format": " {name} {icon}",
         "format-icons": {
-            "locked": "",
-            "unlocked": ""
+            "locked": "",
+            "unlocked": ""
         }
     },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+     "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 20,
+        "icon-theme": "Star",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        //"on-click-middle": "close",
+        //"on-click-right": "activate"
     },
-//    "idle_inhibitor": {
-//        "format": "{icon}",
-//        "format-icons": {
-//            "activated": "",
-//            "deactivated": ""
-//        }
-//    },
-//    "tray": {
-//        // "icon-size": 21,
-//        "spacing": 10
-//    },
+   "sway/language": {
+    "format": " {}",
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+        "icon-size": 20,
+        "spacing": 10
+    },
     "clock": {
-        "interval": 5,
-        "format-alt": " {:%e %b %Y}", // Icon: calendar-alt
-        "format": "{:%H:%M}",
-        "tooltip-format": "{:%e %B %Y}"
-    },
-
-
-//big>\n<tt><small>{calendar}</small></tt>",
-//        "format-alt": "{:%Y-%m-%d}"
-//    "temperature": {
-//        // "thermal-zone": 2,
-//        // "hwmon-path": "/sys/class/hwmon/hwmon2/
-//temp1_input",
-//        "critical-threshold": 80,
-//        // "format-critical": "{temperatureC}°C {icon}",
-//        "format": "{temperatureC}°C {icon}",
-//        "format-icons": ["", "", ""]
-    "temperature": {
-        // "thermal-zone": 2,
-        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C ",
-        "format": "  {temperatureC}°C"
+        //"timezone": "America/New_York",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
-        "interval": 10,
-        "format": " {}%",
-        "on-click": "kitty python3 ~/python-files/gtk-29.py"
+        "format": "{usage}% ",
+        "tooltip": false
     },
     "memory": {
-        "interval": 30,
-        "format": "🖥 {used:0.2f} / {total:0.0f} GB",
-        "on-click": "kitty -e btop"
+        "format": "{}% "
     },
-    "custom/storage": {
-        "format": " {}",
-        "format-alt": "{percentage}% ",
-        "format-alt-click": "click-right",
-        "return-type": "json",
-        "interval": 60,
-        "exec": "~/.config/waybar/modules/storage.sh"
+
+    "temperature": {
+        // "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 76,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
     },
+
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%)  ",
-        "format-ethernet": "{ipaddr}/{cidr}  ",
-        "tooltip-format": "{ifname} via {gwaddr}  ",
-        "format-linked": "{ifname} (No IP) ⚠",
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "Connected  ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click-right": "bash ~/.config/wofi/wifi_menu/wofi_wifi_menu"
+
     },
+
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": "{icon} {format_source}",
+        "format-muted": "{format_source}",
+        "format-source": "",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
@@ -118,16 +97,16 @@
         },
         "on-click": "pavucontrol"
     },
-    "custom/desligar": {
-    "format": "    ",
-    "on-click": "exec swaynag -t warning -m 'You pressed exit. Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'",
-    "icon-size": 16
-    },
 
-    //
-    // exit mode
-    //
+    "custom/power":{
+        "format": "  ",
+        "on-click": "exec nwg-bar",
+        "on-click-right": "killall nwg-bar"
+    },
+    "custom/htop":{
+        "format": "Htop",
+        "on-click": "~/.config/system_scripts/btop.sh"
+    },
 
 
 }
-//need to install wlogout,kitty @ pavucontrol
